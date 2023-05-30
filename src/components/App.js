@@ -15,7 +15,7 @@ import Login from "./Login";
 import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
@@ -144,8 +144,8 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <Header />
         <Routes>
-          <Route path="sign-up" element={<Register />} />
-          <Route path="sign-in" element={<Login />} />
+          <Route path="/sign-up" element={<Register />} />
+          <Route path="/sign-in" element={<Login />} />
           <Route
             path="/"
             element={

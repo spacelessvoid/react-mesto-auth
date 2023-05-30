@@ -7,17 +7,17 @@ export default function Header() {
       <img src={logo} alt="Логотип" className="header__logo" />
       <Routes>
         <Route
-          path="/sign-up"
+          path="/signup"
           element={
-            <Link className="link" to="/sign-in">
+            <Link className="link" to="/signin">
               Войти
             </Link>
           }
         />
         <Route
-          path="/sign-in"
+          path="/signin"
           element={
-            <Link className="link" to="/sign-up">
+            <Link className="link" to="/signup">
               Регистрация
             </Link>
           }

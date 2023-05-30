@@ -10,14 +10,19 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import ConfirmDeletePopup from "./ConfirmDeletePopup";
+import InfoTooltip from "./InfoTooltip";
 import Register from "./Register";
 import Login from "./Login";
 import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(true);
+  const [isRegistrationSuccessful, setIsRegistrationSuccessful] =
+    useState(false);
   const [currentUser, setCurrentUser] = useState({});
+
   const [cards, setCards] = useState([]);
+
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
@@ -25,6 +30,8 @@ function App() {
   const [isConfirmDeletePopupOpen, setIsConfirmDeletePopupOpen] =
     useState(false);
   const [deletedCard, setDeletedCard] = useState(null);
+  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -60,12 +67,17 @@ function App() {
     setSelectedCard(card);
   }
 
+  function handleInfoTooltipOpen() {
+    setIsInfoTooltipPopupOpen(true);
+  }
+
   // TODO: fix image popup closing glitch
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsConfirmDeletePopupOpen(false);
+    setIsInfoTooltipPopupOpen(false);
     setSelectedCard(null);
   }
 
@@ -144,8 +156,8 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <Header />
         <Routes>
-          <Route path="/sign-up" element={<Register />} />
-          <Route path="/sign-in" element={<Login />} />
+          <Route path="/signup" element={<Register />} />
+          <Route path="/signin" element={<Login />} />
           <Route
             path="/"
             element={
@@ -196,6 +208,12 @@ function App() {
         />
 
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+
+        <InfoTooltip
+          isOpen={isInfoTooltipPopupOpen}
+          onClose={closeAllPopups}
+          isSuccess={isRegistrationSuccessful}
+        />
       </CurrentUserContext.Provider>
     </div>
   );

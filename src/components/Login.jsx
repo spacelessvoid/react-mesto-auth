@@ -1,11 +1,11 @@
-function Register({ isLoading }) {
+function Login({ isLoading }) {
   return (
     <div className="welcome-form">
-      <h2 className="welcome-form__title">Регистрация</h2>
+      <h2 className="welcome-form__title">Вход</h2>
       <form
         className="welcome-form__form"
-        id="register"
-        name="register"
+        id="login"
+        name="login"
         // onSubmit={onSubmit}
       >
         <input
@@ -30,17 +30,11 @@ function Register({ isLoading }) {
           // onChange={handleDescriptionChange}
         />
         <button className="welcome-form__button button" type="submit">
-          {isLoading ? "Обработка запроса..." : "Зарегистрироваться"}
+          {isLoading ? "Обработка запроса..." : "Войти"}
         </button>
       </form>
-      <p className="welcome-form__text">
-        Уже зарегистрированы?{" "}
-        <a href="/sign-in" className="link">
-          Войти
-        </a>
-      </p>
     </div>
   );
 }
 
-export default Register;
+export default Login;

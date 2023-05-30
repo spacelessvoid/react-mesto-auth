@@ -11,6 +11,7 @@ import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import ConfirmDeletePopup from "./ConfirmDeletePopup";
 import Register from "./Register";
+import Login from "./Login";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -140,8 +141,9 @@ function App() {
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
         <Header />
-        <Register />
-        {/* <Main
+        {/* <Register /> */}
+        {/* <Login /> */}
+        <Main
           onEditAvatar={handleEditAvatarClick}
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
@@ -150,7 +152,7 @@ function App() {
           onCardDelete={handleConfirmDelete}
           onUpdateUser={handleUpdateUser}
           cards={cards}
-        /> */}
+        />
         <Footer />
 
         <EditProfilePopup

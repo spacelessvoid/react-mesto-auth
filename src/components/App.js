@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { api } from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import { Routes, Route } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -9,6 +10,7 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import ConfirmDeletePopup from "./ConfirmDeletePopup";
+import Register from "./Register";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
@@ -138,7 +140,8 @@ function App() {
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
         <Header />
-        <Main
+        <Register />
+        {/* <Main
           onEditAvatar={handleEditAvatarClick}
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
@@ -147,7 +150,7 @@ function App() {
           onCardDelete={handleConfirmDelete}
           onUpdateUser={handleUpdateUser}
           cards={cards}
-        />
+        /> */}
         <Footer />
 
         <EditProfilePopup

@@ -22,7 +22,7 @@ export default function ConfirmDeletePopup({
       onSubmit={handleSubmit}
     >
       <button className="popup__button button" type="submit">
-        {isLoading ? "Удаляю..." : "Да, удалить карточку"}
+        {isLoading ? "Удаление..." : "Да, удалить карточку"}
       </button>
     </PopupWithForm>
   );

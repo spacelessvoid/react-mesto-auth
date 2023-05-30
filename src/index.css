@@ -3,6 +3,7 @@
 
 @import url(./blocks/page/page.css);
 @import url(./blocks/button/button.css);
+@import url(./blocks/link/link.css);
 
 @import url(./blocks/popup/popup.css);
 @import url(./blocks/popup/_opened/popup_opened.css);
@@ -52,3 +53,10 @@
 
 @import url(./blocks/footer/footer.css);
 @import url(./blocks/footer/__copy/footer__copy.css);
+
+@import url(./blocks/welcome-form/welcome-form.css);
+@import url(./blocks/welcome-form/__button/welcome-form__button.css);
+@import url(./blocks/welcome-form/__form/welcome-form__form.css);
+@import url(./blocks/welcome-form/__text-input/welcome-form__text-input.css);
+@import url(./blocks/welcome-form/__title/welcome-form__title.css);
+@import url(./blocks/welcome-form/__text/welcome-form__text.css);

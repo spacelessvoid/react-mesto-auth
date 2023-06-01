@@ -14,6 +14,7 @@ import InfoTooltip from "./InfoTooltip";
 import Register from "./Register";
 import Login from "./Login";
 import ProtectedRoute from "./ProtectedRoute";
+import PageNotFound from "./PageNotFound";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(true);
@@ -175,6 +176,7 @@ function App() {
               />
             }
           />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
         <Footer />
 

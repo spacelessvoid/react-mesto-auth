@@ -1,6 +1,6 @@
 function Register({ isLoading }) {
   return (
-    <div className="welcome-form">
+    <section className="welcome-form">
       <h2 className="welcome-form__title">Регистрация</h2>
       <form
         className="welcome-form__form"
@@ -39,7 +39,7 @@ function Register({ isLoading }) {
           Войти
         </a>
       </p>
-    </div>
+    </section>
   );
 }
 

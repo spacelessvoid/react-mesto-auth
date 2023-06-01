@@ -1,6 +1,6 @@
 function Login({ isLoading }) {
   return (
-    <div className="welcome-form">
+    <section className="welcome-form">
       <h2 className="welcome-form__title">Вход</h2>
       <form
         className="welcome-form__form"
@@ -33,7 +33,7 @@ function Login({ isLoading }) {
           {isLoading ? "Обработка запроса..." : "Войти"}
         </button>
       </form>
-    </div>
+    </section>
   );
 }
 

@@ -11,10 +11,11 @@ function Login({ isLoading }) {
         <input
           className="welcome-form__text-input"
           type="email"
-          name="username"
-          id="username-input"
+          name="email"
+          id="email-input"
           placeholder="Email"
           required
+          autoComplete="email"
           // value={name || ""}
           // onChange={handleNameChange}
         />

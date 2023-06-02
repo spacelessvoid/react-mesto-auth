@@ -1,4 +1,28 @@
-function Register({ isLoading }) {
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
+function Register({ isLoading, handleRegistration }) {
+  const [formValue, setFormValue] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleInputChange = e => {
+    const { name, value } = e.target;
+
+    setFormValue({
+      ...formValue,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (e.target.checkValidity()) {
+      handleRegistration(formValue);
+    }
+  };
+
   return (
     <section className="welcome-form">
       <h2 className="welcome-form__title">Регистрация</h2>
@@ -6,17 +30,18 @@ function Register({ isLoading }) {
         className="welcome-form__form"
         id="register"
         name="register"
-        // onSubmit={onSubmit}
+        onSubmit={handleSubmit}
       >
         <input
           className="welcome-form__text-input"
           type="email"
-          name="username"
-          id="username-input"
+          name="email"
+          id="email-input"
           placeholder="Email"
           required
-          // value={name || ""}
-          // onChange={handleNameChange}
+          autoComplete="email"
+          value={formValue.email || ""}
+          onChange={handleInputChange}
         />
         <input
           className="welcome-form__text-input"
@@ -26,8 +51,8 @@ function Register({ isLoading }) {
           placeholder="Пароль"
           minLength="8"
           required
-          // value={description || ""}
-          // onChange={handleDescriptionChange}
+          value={formValue.password || ""}
+          onChange={handleInputChange}
         />
         <button className="welcome-form__button button" type="submit">
           {isLoading ? "Обработка запроса..." : "Зарегистрироваться"}
@@ -35,9 +60,9 @@ function Register({ isLoading }) {
       </form>
       <p className="welcome-form__text">
         Уже зарегистрированы?{" "}
-        <a href="/sign-in" className="link">
+        <Link to="/signin" className="link">
           Войти
-        </a>
+        </Link>
       </p>
     </section>
   );

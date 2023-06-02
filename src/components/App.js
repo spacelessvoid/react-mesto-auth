@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { api } from "../utils/Api";
+import { register } from "../utils/Auth";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -35,6 +36,8 @@ function App() {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     Promise.all([
       // Fetching user profile data
@@ -66,10 +69,6 @@ function App() {
 
   function handleCardClick(card) {
     setSelectedCard(card);
-  }
-
-  function handleInfoTooltipOpen() {
-    setIsInfoTooltipPopupOpen(true);
   }
 
   // TODO: fix image popup closing glitch
@@ -152,12 +151,29 @@ function App() {
       });
   }
 
+  function handleRegistration({ email, password }) {
+    register(email, password)
+      .then(() => {
+        setIsRegistrationSuccessful(true);
+        setIsInfoTooltipPopupOpen(true);
+        navigate("/signin");
+      })
+      .catch(err => {
+        console.log(err);
+        setIsRegistrationSuccessful(false);
+        setIsInfoTooltipPopupOpen(true);
+      });
+  }
+
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
         <Header />
         <Routes>
-          <Route path="/signup" element={<Register />} />
+          <Route
+            path="/signup"
+            element={<Register handleRegistration={handleRegistration} />}
+          />
           <Route path="/signin" element={<Login />} />
           <Route
             path="/"

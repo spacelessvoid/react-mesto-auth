@@ -17,7 +17,7 @@ function request(endpoint, options) {
 export function register(email, password) {
   return request("/signup", {
     method: "POST",
-    headers: headers,
+    headers,
     body: JSON.stringify({ email, password }),
   });
 }
@@ -25,7 +25,14 @@ export function register(email, password) {
 export function authorize(email, password) {
   return request("/signin", {
     method: "POST",
-    headers: headers,
+    headers,
     body: JSON.stringify({ email, password }),
+  });
+}
+
+export function checkToken(token) {
+  return request("/users/me", {
+    method: "GET",
+    headers: { ...headers, Authorization: `Bearer ${token}` },
   });
 }

@@ -31,7 +31,7 @@ export default function Header() {
           element={
             <div>
               <span className="header__user-info">{currentUser.email}</span>
-              <Link className="link" to="/signin">
+              <Link className="link" to="/signin" replace>
                 Выйти
               </Link>
             </div>

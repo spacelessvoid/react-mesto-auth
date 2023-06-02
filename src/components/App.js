@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { api } from "../utils/Api";
-import { authorize, register } from "../utils/Auth";
+import { authorize, checkToken, register } from "../utils/Auth";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Header from "./Header";
@@ -39,6 +39,8 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    handleCheckToken();
+
     Promise.all([
       // Fetching user profile data
       api.getUserInfo(),
@@ -151,9 +153,9 @@ function App() {
       });
   }
 
-  function handleLogin(email) {
+  function handleLogin({ email }) {
     setLoggedIn(true);
-    setCurrentUser({ ...currentUser, email: email });
+    setCurrentUser({ ...currentUser, email });
   }
 
   function handleRegistration({ email, password }) {
@@ -163,7 +165,7 @@ function App() {
       .then(() => setIsRegistrationSuccessful(true))
       .then(() => {
         setIsInfoTooltipPopupOpen(true);
-        navigate("/signin");
+        navigate("/signin", { replace: true });
       })
       .catch(err => {
         console.log(err);
@@ -181,11 +183,24 @@ function App() {
         if (data.token) {
           localStorage.setItem("jwt", data.token);
           handleLogin(email);
-          navigate("/");
+          navigate("/", { replace: true });
         }
       })
       .catch(console.log)
       .finally(setIsLoading(false));
+  }
+
+  function handleCheckToken() {
+    const jwt = localStorage.getItem("jwt");
+
+    if (jwt) {
+      checkToken(jwt)
+        .then(user => {
+          handleLogin(user);
+          navigate("/", { replace: true });
+        })
+        .catch(console.log);
+    }
   }
 
   return (

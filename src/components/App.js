@@ -22,6 +22,7 @@ function App() {
   const [isRegistrationSuccessful, setIsRegistrationSuccessful] =
     useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [userEmail, setUserEmail] = useState({ email: "" });
 
   const [cards, setCards] = useState([]);
 
@@ -155,7 +156,7 @@ function App() {
 
   function handleLogin({ email }) {
     setLoggedIn(true);
-    setCurrentUser({ ...currentUser, email });
+    setUserEmail({ email });
   }
 
   function handleRegistration({ email, password }) {
@@ -196,17 +197,21 @@ function App() {
     if (jwt) {
       checkToken(jwt)
         .then(user => {
-          handleLogin(user);
+          handleLogin(user.data);
           navigate("/", { replace: true });
         })
         .catch(console.log);
     }
   }
 
+  function onSignOut() {
+    localStorage.removeItem("jwt");
+  }
+
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
-        <Header />
+        <Header onSignOut={onSignOut} userEmail={userEmail} />
         <Routes>
           <Route
             path="/signup"

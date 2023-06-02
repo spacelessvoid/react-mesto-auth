@@ -1,10 +1,12 @@
 import { Routes, Route, Link } from "react-router-dom";
 import logo from "../images/logo.svg";
-import { useContext } from "react";
-import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-export default function Header() {
-  const currentUser = useContext(CurrentUserContext);
+export default function Header({ onSignOut, userEmail }) {
+  const { email } = userEmail;
+
+  const handleSignOut = () => {
+    onSignOut();
+  };
 
   return (
     <header className="header">
@@ -30,8 +32,13 @@ export default function Header() {
           path="/"
           element={
             <div>
-              <span className="header__user-info">{currentUser.email}</span>
-              <Link className="link" to="/signin" replace>
+              <span className="header__user-info">{email}</span>
+              <Link
+                onClick={handleSignOut}
+                className="link"
+                to="/signin"
+                replace
+              >
                 Выйти
               </Link>
             </div>

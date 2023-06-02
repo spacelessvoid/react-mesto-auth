@@ -1,7 +1,11 @@
 import { Routes, Route, Link } from "react-router-dom";
 import logo from "../images/logo.svg";
+import { useContext } from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 export default function Header() {
+  const currentUser = useContext(CurrentUserContext);
+
   return (
     <header className="header">
       <img src={logo} alt="Логотип" className="header__logo" />
@@ -26,10 +30,10 @@ export default function Header() {
           path="/"
           element={
             <div>
-              <span className="header__user-info">test@test.test</span>
-              <a className="link" href="/">
+              <span className="header__user-info">{currentUser.email}</span>
+              <Link className="link" to="/signin">
                 Выйти
-              </a>
+              </Link>
             </div>
           }
         />

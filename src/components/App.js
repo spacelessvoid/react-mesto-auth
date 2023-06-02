@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { api } from "../utils/Api";
-import { register } from "../utils/Auth";
+import { authorize, register } from "../utils/Auth";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Header from "./Header";
@@ -18,7 +18,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import PageNotFound from "./PageNotFound";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [isRegistrationSuccessful, setIsRegistrationSuccessful] =
     useState(false);
   const [currentUser, setCurrentUser] = useState({});
@@ -151,10 +151,17 @@ function App() {
       });
   }
 
+  function handleLogin(email) {
+    setLoggedIn(true);
+    setCurrentUser({ ...currentUser, email: email });
+  }
+
   function handleRegistration({ email, password }) {
+    setIsLoading(true);
+
     register(email, password)
+      .then(() => setIsRegistrationSuccessful(true))
       .then(() => {
-        setIsRegistrationSuccessful(true);
         setIsInfoTooltipPopupOpen(true);
         navigate("/signin");
       })
@@ -162,7 +169,23 @@ function App() {
         console.log(err);
         setIsRegistrationSuccessful(false);
         setIsInfoTooltipPopupOpen(true);
-      });
+      })
+      .finally(setIsLoading(false));
+  }
+
+  function handleAuthorization({ email, password }) {
+    setIsLoading(true);
+
+    authorize(email, password)
+      .then(data => {
+        if (data.token) {
+          localStorage.setItem("jwt", data.token);
+          handleLogin(email);
+          navigate("/");
+        }
+      })
+      .catch(console.log)
+      .finally(setIsLoading(false));
   }
 
   return (
@@ -172,9 +195,22 @@ function App() {
         <Routes>
           <Route
             path="/signup"
-            element={<Register handleRegistration={handleRegistration} />}
+            element={
+              <Register
+                handleRegistration={handleRegistration}
+                isLoading={isLoading}
+              />
+            }
           />
-          <Route path="/signin" element={<Login />} />
+          <Route
+            path="/signin"
+            element={
+              <Login
+                handleAuthorization={handleAuthorization}
+                isLoading={isLoading}
+              />
+            }
+          />
           <Route
             path="/"
             element={

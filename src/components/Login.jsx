@@ -1,4 +1,24 @@
-function Login({ isLoading }) {
+import { useState } from "react";
+
+function Login({ isLoading, handleAuthorization }) {
+  const [formValue, setFormValue] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleInputChange = e => {
+    const { name, value } = e.target;
+
+    setFormValue({
+      ...formValue,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    handleAuthorization(formValue);
+  };
   return (
     <section className="welcome-form">
       <h2 className="welcome-form__title">Вход</h2>
@@ -6,7 +26,7 @@ function Login({ isLoading }) {
         className="welcome-form__form"
         id="login"
         name="login"
-        // onSubmit={onSubmit}
+        onSubmit={handleSubmit}
       >
         <input
           className="welcome-form__text-input"
@@ -16,8 +36,8 @@ function Login({ isLoading }) {
           placeholder="Email"
           required
           autoComplete="email"
-          // value={name || ""}
-          // onChange={handleNameChange}
+          value={formValue.email || ""}
+          onChange={handleInputChange}
         />
         <input
           className="welcome-form__text-input"
@@ -27,8 +47,8 @@ function Login({ isLoading }) {
           placeholder="Пароль"
           minLength="8"
           required
-          // value={description || ""}
-          // onChange={handleDescriptionChange}
+          value={formValue.password || ""}
+          onChange={handleInputChange}
         />
         <button className="welcome-form__button button" type="submit">
           {isLoading ? "Обработка запроса..." : "Войти"}

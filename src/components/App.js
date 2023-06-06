@@ -53,9 +53,7 @@ function App() {
 
         setCards(cards);
       })
-      .catch(err => {
-        console.log(err);
-      });
+      .catch(console.error);
   }, []);
 
   function handleEditAvatarClick() {
@@ -92,7 +90,7 @@ function App() {
       .then(newCard => {
         setCards(state => state.map(c => (c._id === card._id ? newCard : c)));
       })
-      .catch(err => console.log(err));
+      .catch(console.error);
   }
 
   function handleConfirmDelete(card) {
@@ -108,9 +106,9 @@ function App() {
       .then(() => {
         setCards(state => state.filter(c => c._id !== card._id));
       })
-      .catch(err => console.log(err))
+      .then(() => closeAllPopups())
+      .catch(console.error)
       .finally(() => {
-        closeAllPopups();
         setIsLoading(false);
       });
   }
@@ -121,9 +119,9 @@ function App() {
     api
       .updateUserInfo(info)
       .then(newInfo => setCurrentUser(newInfo))
-      .catch(err => console.log(err))
+      .then(() => closeAllPopups())
+      .catch(console.error)
       .finally(() => {
-        closeAllPopups();
         setIsLoading(false);
       });
   }
@@ -134,9 +132,9 @@ function App() {
     api
       .updateUserAvatar(avatar)
       .then(newAvatar => setCurrentUser(newAvatar))
-      .catch(err => console.log(err))
+      .then(() => closeAllPopups())
+      .catch(console.error)
       .finally(() => {
-        closeAllPopups();
         setIsLoading(false);
       });
   }
@@ -147,9 +145,9 @@ function App() {
     api
       .addNewCard(card)
       .then(newCard => setCards([newCard, ...cards]))
-      .catch(err => console.log(err))
+      .then(() => closeAllPopups())
+      .catch(console.error)
       .finally(() => {
-        closeAllPopups();
         setIsLoading(false);
       });
   }
@@ -168,8 +166,8 @@ function App() {
         setIsInfoTooltipPopupOpen(true);
         navigate("/signin", { replace: true });
       })
-      .catch(err => {
-        console.log(err);
+      .catch(() => {
+        console.error();
         setIsRegistrationSuccessful(false);
         setIsInfoTooltipPopupOpen(true);
       })
@@ -183,11 +181,11 @@ function App() {
       .then(data => {
         if (data.token) {
           localStorage.setItem("jwt", data.token);
-          handleLogin({email});
+          handleLogin({ email });
           navigate("/", { replace: true });
         }
       })
-      .catch(console.log)
+      .catch(console.error)
       .finally(setIsLoading(false));
   }
 
@@ -200,7 +198,7 @@ function App() {
           handleLogin(user.data);
           navigate("/", { replace: true });
         })
-        .catch(console.log);
+        .catch(console.error);
     }
   }
 

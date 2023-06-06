@@ -1,19 +1,23 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import PopupWithForm from "./PopupWithForm";
 
 export default function EditAvatarPopup({ isOpen, onUpdateAvatar }) {
-  const avatarRef = useRef();
+  const [avatarLink, setAvatarLink] = useState("");
+
+  const handleChangeCardTitle = e => {
+    setAvatarLink(e.target.value);
+  };
 
   function handleSubmit(e) {
     e.preventDefault();
 
     onUpdateAvatar({
-      avatar: avatarRef.current.value,
+      avatar: avatarLink,
     });
   }
 
   useEffect(() => {
-    avatarRef.current.value = "";
+    setAvatarLink("");
   }, [isOpen]);
 
   return (
@@ -32,7 +36,8 @@ export default function EditAvatarPopup({ isOpen, onUpdateAvatar }) {
         id="avatar-input"
         placeholder="Ссылка на новый аватар"
         required
-        ref={avatarRef}
+        value={avatarLink || ""}
+        onChange={handleChangeCardTitle}
       />
       <span className="popup__input-error avatar-input-error"></span>
     </PopupWithForm>

@@ -1,12 +1,15 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { AppContext } from "../contexts/AppContext";
 
-export default function ImagePopup({ card, onClose }) {
+export default function ImagePopup({ card }) {
+  const { closeAllPopups } = useContext(AppContext);
+
   function handleClick(evt) {
     if (
       evt.target.classList.contains("popup") ||
       evt.target.classList.contains("popup__close")
     ) {
-      onClose();
+      closeAllPopups();
     }
   }
 
@@ -15,13 +18,13 @@ export default function ImagePopup({ card, onClose }) {
 
     function handleUserEscKeyPress(evt) {
       if (evt.key === "Escape") {
-        onClose();
+        closeAllPopups();
       }
     }
 
     document.addEventListener("keydown", handleUserEscKeyPress);
     return () => document.removeEventListener("keydown", handleUserEscKeyPress);
-  }, [card, onClose]);
+  }, [card, closeAllPopups]);
 
   return (
     <div

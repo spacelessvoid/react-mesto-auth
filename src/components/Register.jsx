@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AppContext } from "../contexts/AppContext";
 
-function Register({ isLoading, handleRegistration }) {
+function Register({ handleRegistration }) {
+  const { isLoading } = useContext(AppContext);
+
   const [formValue, setFormValue] = useState({
     email: "",
     password: "",

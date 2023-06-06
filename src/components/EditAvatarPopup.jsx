@@ -1,12 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import PopupWithForm from "./PopupWithForm";
+import { AppContext } from "../contexts/AppContext";
 
-export default function EditAvatarPopup({
-  isOpen,
-  onClose,
-  onUpdateAvatar,
-  isLoading,
-}) {
+export default function EditAvatarPopup({ isOpen, onUpdateAvatar }) {
+  const { isLoading, closeAllPopups } = useContext(AppContext);
   const avatarRef = useRef();
 
   function handleSubmit(e) {
@@ -26,7 +23,7 @@ export default function EditAvatarPopup({
       title={"Обновить аватар"}
       name={"change-avatar"}
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={closeAllPopups}
       onSubmit={handleSubmit}
     >
       <input

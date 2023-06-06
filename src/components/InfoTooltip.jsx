@@ -1,14 +1,17 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import success from "../images/register-success.svg";
 import fail from "../images/register-fail.svg";
+import { AppContext } from "../contexts/AppContext";
 
-function InfoTooltip({ isOpen, onClose, isSuccess }) {
+function InfoTooltip({ isOpen, isSuccess }) {
+  const { closeAllPopups } = useContext(AppContext);
+
   function handleClick(evt) {
     if (
       evt.target.classList.contains("popup") ||
       evt.target.classList.contains("popup__close")
     ) {
-      onClose();
+      closeAllPopups();
     }
   }
 
@@ -17,13 +20,13 @@ function InfoTooltip({ isOpen, onClose, isSuccess }) {
 
     function handleUserEscKeyPress(evt) {
       if (evt.key === "Escape") {
-        onClose();
+        closeAllPopups();
       }
     }
 
     document.addEventListener("keydown", handleUserEscKeyPress);
     return () => document.removeEventListener("keydown", handleUserEscKeyPress);
-  }, [isOpen, onClose]);
+  }, [isOpen, closeAllPopups]);
 
   return (
     <div

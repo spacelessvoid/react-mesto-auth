@@ -1,12 +1,14 @@
+import { useContext } from "react";
 import PopupWithForm from "./PopupWithForm";
+import { AppContext } from "../contexts/AppContext";
 
 export default function ConfirmDeletePopup({
   isOpen,
-  onClose,
   onConfirmDelete,
-  isLoading,
-  card
+  card,
 }) {
+  const { isLoading, closeAllPopups } = useContext(AppContext);
+
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -18,7 +20,7 @@ export default function ConfirmDeletePopup({
       title={"Вы уверены?"}
       name={"confirm-delete"}
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={closeAllPopups}
       onSubmit={handleSubmit}
     >
       <button className="popup__button button" type="submit">

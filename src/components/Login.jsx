@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AppContext } from "../contexts/AppContext";
 
-function Login({ isLoading, handleAuthorization }) {
+function Login({ handleAuthorization }) {
+  const { isLoading } = useContext(AppContext);
+
   const [formValue, setFormValue] = useState({
     email: "",
     password: "",

@@ -183,7 +183,7 @@ function App() {
       .then(data => {
         if (data.token) {
           localStorage.setItem("jwt", data.token);
-          handleLogin(email);
+          handleLogin({email});
           navigate("/", { replace: true });
         }
       })

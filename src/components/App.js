@@ -163,15 +163,16 @@ function App() {
     register(email, password)
       .then(() => setIsRegistrationSuccessful(true))
       .then(() => {
-        setIsInfoTooltipPopupOpen(true);
         navigate("/signin", { replace: true });
       })
       .catch(() => {
         console.error();
         setIsRegistrationSuccessful(false);
-        setIsInfoTooltipPopupOpen(true);
       })
-      .finally(setIsLoading(false));
+      .finally(() => {
+        setIsInfoTooltipPopupOpen(true);
+        setIsLoading(false);
+      });
   }
 
   function handleAuthorization({ email, password }) {
@@ -186,7 +187,7 @@ function App() {
         }
       })
       .catch(console.error)
-      .finally(setIsLoading(false));
+      .finally(() => setIsLoading(false));
   }
 
   function handleCheckToken() {

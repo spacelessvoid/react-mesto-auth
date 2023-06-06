@@ -1,19 +1,23 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { AppContext } from "../contexts/AppContext";
 
 export default function PopupWithForm({
   title,
   name,
+  buttonText,
+  buttonLoading,
   children,
   isOpen,
-  onClose,
   onSubmit,
 }) {
+  const { isLoading, closeAllPopups } = useContext(AppContext);
+
   function handleClick(evt) {
     if (
       evt.target.classList.contains("popup") ||
       evt.target.classList.contains("popup__close")
     ) {
-      onClose();
+      closeAllPopups();
     }
   }
 
@@ -22,13 +26,13 @@ export default function PopupWithForm({
 
     function handleUserEscKeyPress(evt) {
       if (evt.key === "Escape") {
-        onClose();
+        closeAllPopups();
       }
     }
 
     document.addEventListener("keydown", handleUserEscKeyPress);
     return () => document.removeEventListener("keydown", handleUserEscKeyPress);
-  }, [isOpen, onClose]);
+  }, [isOpen, closeAllPopups]);
 
   return (
     <div
@@ -51,6 +55,9 @@ export default function PopupWithForm({
           onSubmit={onSubmit}
         >
           {children}
+          <button className="popup__button button" type="submit">
+            {isLoading ? buttonLoading : buttonText}
+          </button>
         </form>
       </div>
     </div>

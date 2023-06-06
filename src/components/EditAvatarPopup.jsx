@@ -1,9 +1,7 @@
-import { useContext, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import PopupWithForm from "./PopupWithForm";
-import { AppContext } from "../contexts/AppContext";
 
 export default function EditAvatarPopup({ isOpen, onUpdateAvatar }) {
-  const { isLoading, closeAllPopups } = useContext(AppContext);
   const avatarRef = useRef();
 
   function handleSubmit(e) {
@@ -22,8 +20,9 @@ export default function EditAvatarPopup({ isOpen, onUpdateAvatar }) {
     <PopupWithForm
       title={"Обновить аватар"}
       name={"change-avatar"}
+      buttonLoading={"Сохранение..."}
+      buttonText={"Сохранить"}
       isOpen={isOpen}
-      onClose={closeAllPopups}
       onSubmit={handleSubmit}
     >
       <input
@@ -36,9 +35,6 @@ export default function EditAvatarPopup({ isOpen, onUpdateAvatar }) {
         ref={avatarRef}
       />
       <span className="popup__input-error avatar-input-error"></span>
-      <button className="popup__button button" type="submit">
-        {isLoading ? "Сохранение..." : "Сохранить"}
-      </button>
     </PopupWithForm>
   );
 }

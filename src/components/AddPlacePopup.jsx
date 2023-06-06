@@ -1,10 +1,7 @@
-import { useContext, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import PopupWithForm from "./PopupWithForm";
-import { AppContext } from "../contexts/AppContext";
 
 export default function AddPlacePopup({ isOpen, onAddPlace }) {
-  const { isLoading, closeAllPopups } = useContext(AppContext);
-
   const cardTitleRef = useRef();
   const cardLinkRef = useRef();
 
@@ -26,8 +23,9 @@ export default function AddPlacePopup({ isOpen, onAddPlace }) {
     <PopupWithForm
       title={"Новое место"}
       name={"add-image"}
+      buttonLoading={"Сохранение..."}
+      buttonText={"Создать"}
       isOpen={isOpen}
-      onClose={closeAllPopups}
       onSubmit={handleSubmit}
     >
       <input
@@ -52,9 +50,6 @@ export default function AddPlacePopup({ isOpen, onAddPlace }) {
         ref={cardLinkRef}
       />
       <span className="popup__input-error link-input-error"></span>
-      <button className="popup__button button" type="submit">
-        {isLoading ? "Сохранение..." : "Создать"}
-      </button>
     </PopupWithForm>
   );
 }

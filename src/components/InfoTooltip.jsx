@@ -1,38 +1,18 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import success from "../images/register-success.svg";
 import fail from "../images/register-fail.svg";
 import { AppContext } from "../contexts/AppContext";
+import usePopupClose from "../hooks/usePopupClose";
 
 function InfoTooltip({ isOpen, isSuccess }) {
   const { closeAllPopups } = useContext(AppContext);
 
-  function handleClick(evt) {
-    if (
-      evt.target.classList.contains("popup") ||
-      evt.target.classList.contains("popup__close")
-    ) {
-      closeAllPopups();
-    }
-  }
-
-  useEffect(() => {
-    if (!isOpen) return;
-
-    function handleUserEscKeyPress(evt) {
-      if (evt.key === "Escape") {
-        closeAllPopups();
-      }
-    }
-
-    document.addEventListener("keydown", handleUserEscKeyPress);
-    return () => document.removeEventListener("keydown", handleUserEscKeyPress);
-  }, [isOpen, closeAllPopups]);
+  usePopupClose(isOpen, closeAllPopups);
 
   return (
     <div
       className={"popup" + (isOpen ? " popup_opened" : "")}
       id={`popup-info`}
-      onClick={handleClick}
     >
       <div className="popup__container">
         <button

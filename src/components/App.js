@@ -73,7 +73,6 @@ function App() {
     setSelectedCard(card);
   }
 
-  // TODO: fix image popup closing glitch
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false);
     setIsAddPlacePopupOpen(false);
@@ -162,13 +161,13 @@ function App() {
     setIsLoading(true);
 
     register(email, password)
-      .then(() => setIsRegistrationSuccessful(true))
+      .then(setIsRegistrationSuccessful(true))
       .then(() => {
         navigate("/signin", { replace: true });
       })
       .catch(() => {
-        console.error();
         setIsRegistrationSuccessful(false);
+        console.error();
       })
       .finally(() => {
         setIsInfoTooltipPopupOpen(true);

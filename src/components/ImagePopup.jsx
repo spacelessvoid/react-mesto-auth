@@ -1,42 +1,22 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AppContext } from "../contexts/AppContext";
+import usePopupClose from "../hooks/usePopupClose";
 
 export default function ImagePopup({ card }) {
   const [image, setImage] = useState({ link: "", name: "" });
 
   const { closeAllPopups } = useContext(AppContext);
 
-  function handleClick(evt) {
-    if (
-      evt.target.classList.contains("popup") ||
-      evt.target.classList.contains("popup__close")
-    ) {
-      closeAllPopups();
-    }
-  }
+  usePopupClose(card, closeAllPopups);
 
   function onImageLoad({ target: img }) {
     setImage({ link: img.src, name: img.alt });
   }
 
-  useEffect(() => {
-    if (!card) return;
-
-    function handleUserEscKeyPress(evt) {
-      if (evt.key === "Escape") {
-        closeAllPopups();
-      }
-    }
-
-    document.addEventListener("keydown", handleUserEscKeyPress);
-    return () => document.removeEventListener("keydown", handleUserEscKeyPress);
-  }, [card, closeAllPopups]);
-
   return (
     <div
       className={`popup popup_bg-opacity_darker ${card && "popup_opened"}`}
       id="popup-zoom-image"
-      onClick={handleClick}
     >
       <div className="popup__zoom-container">
         <button

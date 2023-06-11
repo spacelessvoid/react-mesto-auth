@@ -55,6 +55,7 @@ function App() {
         setCards(cards);
       })
       .catch(console.error);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function handleEditAvatarClick() {
@@ -82,6 +83,15 @@ function App() {
     setSelectedCard(null);
   }
 
+  // fn to reduce code duplication in fns calling api and using isLoading state
+  function handleSubmit(request) {
+    setIsLoading(true);
+    request()
+      .then(closeAllPopups)
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
+  }
+
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
 
@@ -99,57 +109,29 @@ function App() {
   }
 
   function handleCardDelete(card) {
-    setIsLoading(true);
-
-    api
-      .deleteCard(card._id)
-      .then(() => {
+    const makeRequest = () =>
+      api.deleteCard(card._id).then(() => {
         setCards(state => state.filter(c => c._id !== card._id));
-      })
-      .then(() => closeAllPopups())
-      .catch(console.error)
-      .finally(() => {
-        setIsLoading(false);
       });
+    handleSubmit(makeRequest);
   }
 
   function handleUpdateUser(info) {
-    setIsLoading(true);
-
-    api
-      .updateUserInfo(info)
-      .then(newInfo => setCurrentUser(newInfo))
-      .then(() => closeAllPopups())
-      .catch(console.error)
-      .finally(() => {
-        setIsLoading(false);
-      });
+    const makeRequest = () =>
+      api.updateUserInfo(info).then(newInfo => setCurrentUser(newInfo));
+    handleSubmit(makeRequest);
   }
 
   function handleUpdateAvatar(avatar) {
-    setIsLoading(true);
-
-    api
-      .updateUserAvatar(avatar)
-      .then(newAvatar => setCurrentUser(newAvatar))
-      .then(() => closeAllPopups())
-      .catch(console.error)
-      .finally(() => {
-        setIsLoading(false);
-      });
+    const makeRequest = () =>
+      api.updateUserAvatar(avatar).then(newAvatar => setCurrentUser(newAvatar));
+    handleSubmit(makeRequest);
   }
 
   function handleAddPlaceSubmit(card) {
-    setIsLoading(true);
-
-    api
-      .addNewCard(card)
-      .then(newCard => setCards([newCard, ...cards]))
-      .then(() => closeAllPopups())
-      .catch(console.error)
-      .finally(() => {
-        setIsLoading(false);
-      });
+    const makeRequest = () =>
+      api.addNewCard(card).then(newCard => setCards([newCard, ...cards]));
+    handleSubmit(makeRequest);
   }
 
   function handleLogin({ email }) {
@@ -176,18 +158,15 @@ function App() {
   }
 
   function handleAuthorization({ email, password }) {
-    setIsLoading(true);
-
-    authorize(email, password)
-      .then(data => {
+    const makeRequest = () =>
+      authorize(email, password).then(data => {
         if (data.token) {
           localStorage.setItem("jwt", data.token);
           handleLogin({ email });
           navigate("/", { replace: true });
         }
-      })
-      .catch(console.error)
-      .finally(() => setIsLoading(false));
+      });
+    handleSubmit(makeRequest);
   }
 
   function handleCheckToken() {

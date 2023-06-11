@@ -15,8 +15,8 @@ import ConfirmDeletePopup from "./ConfirmDeletePopup";
 import InfoTooltip from "./InfoTooltip";
 import Register from "./Register";
 import Login from "./Login";
-import ProtectedRoute from "./ProtectedRoute";
 import PageNotFound from "./PageNotFound";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -264,7 +264,7 @@ function App() {
             card={deletedCard}
           />
 
-          <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+          <ImagePopup card={selectedCard} />
 
           <InfoTooltip
             isOpen={isInfoTooltipPopupOpen}

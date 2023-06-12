@@ -1,32 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
+import useForm from "../hooks/useForm";
 
 export default function AddPlacePopup({ isOpen, onAddPlace }) {
-  const [cardTitle, setCardTitle] = useState("");
-
-  const handleChangeCardTitle = e => {
-    setCardTitle(e.target.value);
-  };
-
-  const [cardLink, setCardLink] = useState("");
-
-  const handleChangeCardLink = e => {
-    setCardLink(e.target.value);
-  };
+  const { formValues, setFormValues, handleInputChange } = useForm({});
+  const { name, link } = formValues;
 
   function handleSubmit(e) {
     e.preventDefault();
 
     onAddPlace({
-      name: cardTitle,
-      link: cardLink,
+      name,
+      link,
     });
   }
 
   useEffect(() => {
-    setCardTitle("");
-    setCardLink("");
-  }, [isOpen]);
+    setFormValues({});
+  }, [isOpen, setFormValues]);
 
   return (
     <PopupWithForm
@@ -46,8 +37,8 @@ export default function AddPlacePopup({ isOpen, onAddPlace }) {
         minLength="2"
         maxLength="30"
         required
-        value={cardTitle || ""}
-        onChange={handleChangeCardTitle}
+        value={name || ""}
+        onChange={handleInputChange}
       />
       <span className="popup__input-error title-input-error"></span>
       <input
@@ -57,8 +48,8 @@ export default function AddPlacePopup({ isOpen, onAddPlace }) {
         id="link-input"
         placeholder="Ссылка на картинку"
         required
-        value={cardLink || ""}
-        onChange={handleChangeCardLink}
+        value={link || ""}
+        onChange={handleInputChange}
       />
       <span className="popup__input-error link-input-error"></span>
     </PopupWithForm>

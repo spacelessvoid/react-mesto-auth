@@ -52,7 +52,6 @@ function App() {
     ])
       .then(([userData, cards]) => {
         setCurrentUser(userData);
-
         setCards(cards);
       })
       .catch(console.error);
@@ -171,15 +170,16 @@ function App() {
   }
 
   function handleCheckToken() {
+    setIsLoading(true);
+
     const jwt = localStorage.getItem("jwt");
 
     if (jwt) {
       checkToken(jwt)
-        .then(user => {
-          handleLogin(user.data);
-          navigate("/", { replace: true });
-        })
-        .catch(console.error);
+        .then(user => handleLogin(user.data))
+        .then(() => navigate("/", { replace: true }))
+        .catch(console.error)
+        .finally(() => setIsLoading(false));
     }
   }
 

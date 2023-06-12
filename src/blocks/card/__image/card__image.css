@@ -12,7 +12,7 @@
 }
 
 .card__image::after {
-  content: attr(alt) " не загрузилось 😓";
+  content: "Картинка не загрузилась 😓";
   font-size: 18px;
   color: hsl(0, 0%, 100%);
   display: block;

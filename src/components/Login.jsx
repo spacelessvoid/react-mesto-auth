@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { AppContext } from "../contexts/AppContext";
+import { BarLoader } from "react-spinners";
 import useForm from "../hooks/useForm";
 
 function Login({ handleAuthorization }) {
@@ -11,7 +12,20 @@ function Login({ handleAuthorization }) {
     e.preventDefault();
     handleAuthorization(formValues);
   };
-  return (
+
+  const override = {
+    display: "block",
+    margin: "50px auto",
+  };
+
+  return isLoading ? (
+    <BarLoader
+      cssOverride={override}
+      color={"gray"}
+      loading={isLoading}
+      aria-label="Loading Spinner"
+    />
+  ) : (
     <section className="welcome-form">
       <h2 className="welcome-form__title">Вход</h2>
       <form
@@ -43,7 +57,7 @@ function Login({ handleAuthorization }) {
           onChange={handleInputChange}
         />
         <button className="welcome-form__button button" type="submit">
-          {isLoading ? "Обработка запроса..." : "Войти"}
+          Войти
         </button>
       </form>
     </section>

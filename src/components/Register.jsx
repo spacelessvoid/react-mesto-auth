@@ -1,28 +1,17 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../contexts/AppContext";
+import useForm from "../hooks/useForm";
 
 function Register({ handleRegistration }) {
   const { isLoading } = useContext(AppContext);
 
-  const [formValue, setFormValue] = useState({
-    email: "",
-    password: "",
-  });
-
-  const handleInputChange = e => {
-    const { name, value } = e.target;
-
-    setFormValue({
-      ...formValue,
-      [name]: value,
-    });
-  };
+  const { formValues, handleInputChange } = useForm({});
 
   const handleSubmit = e => {
     e.preventDefault();
     if (e.target.checkValidity()) {
-      handleRegistration(formValue);
+      handleRegistration(formValues);
     }
   };
 
@@ -43,7 +32,7 @@ function Register({ handleRegistration }) {
           placeholder="Email"
           required
           autoComplete="email"
-          value={formValue.email || ""}
+          value={formValues.email || ""}
           onChange={handleInputChange}
         />
         <input
@@ -54,7 +43,7 @@ function Register({ handleRegistration }) {
           placeholder="Пароль"
           minLength="8"
           required
-          value={formValue.password || ""}
+          value={formValues.password || ""}
           onChange={handleInputChange}
         />
         <button className="welcome-form__button button" type="submit">

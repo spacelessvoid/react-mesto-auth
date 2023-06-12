@@ -1,26 +1,15 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AppContext } from "../contexts/AppContext";
+import useForm from "../hooks/useForm";
 
 function Login({ handleAuthorization }) {
   const { isLoading } = useContext(AppContext);
 
-  const [formValue, setFormValue] = useState({
-    email: "",
-    password: "",
-  });
-
-  const handleInputChange = e => {
-    const { name, value } = e.target;
-
-    setFormValue({
-      ...formValue,
-      [name]: value,
-    });
-  };
+  const { formValues, handleInputChange } = useForm({});
 
   const handleSubmit = e => {
     e.preventDefault();
-    handleAuthorization(formValue);
+    handleAuthorization(formValues);
   };
   return (
     <section className="welcome-form">
@@ -39,7 +28,7 @@ function Login({ handleAuthorization }) {
           placeholder="Email"
           required
           autoComplete="email"
-          value={formValue.email || ""}
+          value={formValues.email || ""}
           onChange={handleInputChange}
         />
         <input
@@ -50,7 +39,7 @@ function Login({ handleAuthorization }) {
           placeholder="Пароль"
           minLength="8"
           required
-          value={formValue.password || ""}
+          value={formValues.password || ""}
           onChange={handleInputChange}
         />
         <button className="welcome-form__button button" type="submit">

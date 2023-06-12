@@ -1,4 +1,5 @@
 import { Routes, Route, Link } from "react-router-dom";
+import * as path from "../utils/paths";
 import logo from "../images/logo.svg";
 
 export default function Header({ onSignOut, userEmail }) {
@@ -13,17 +14,17 @@ export default function Header({ onSignOut, userEmail }) {
       <img src={logo} alt="Логотип" className="header__logo" />
       <Routes>
         <Route
-          path="/signup"
+          path={path.signUp}
           element={
-            <Link className="link" to="/signin">
+            <Link className="link" to={path.signIn}>
               Войти
             </Link>
           }
         />
         <Route
-          path="/signin"
+          path={path.signIn}
           element={
-            <Link className="link" to="/signup">
+            <Link className="link" to={path.signUp}>
               Регистрация
             </Link>
           }
@@ -36,7 +37,7 @@ export default function Header({ onSignOut, userEmail }) {
               <Link
                 onClick={handleSignOut}
                 className="link"
-                to="/signin"
+                to={path.signIn}
                 replace
               >
                 Выйти

@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { api } from "../utils/Api";
-import { authorize, checkToken, register } from "../utils/Auth";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import { AppContext } from "../contexts/AppContext";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { api } from "../utils/Api";
+import { authorize, checkToken, register } from "../utils/Auth";
+import * as path from "../utils/paths";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -83,7 +84,7 @@ function App() {
     setSelectedCard(null);
   }
 
-  // fn to reduce code duplication in fns calling api and using isLoading state
+  // fn to reduce code duplication in functions that call api and use isLoading state
   function handleSubmit(request) {
     setIsLoading(true);
     request()
@@ -145,7 +146,7 @@ function App() {
     register(email, password)
       .then(setIsRegistrationSuccessful(true))
       .then(() => {
-        navigate("/signin", { replace: true });
+        navigate(path.signIn, { replace: true });
       })
       .catch(() => {
         setIsRegistrationSuccessful(false);
@@ -193,11 +194,11 @@ function App() {
           <Header onSignOut={onSignOut} userEmail={userEmail} />
           <Routes>
             <Route
-              path="/signup"
+              path={path.signUp}
               element={<Register handleRegistration={handleRegistration} />}
             />
             <Route
-              path="/signin"
+              path={path.signIn}
               element={<Login handleAuthorization={handleAuthorization} />}
             />
             <Route

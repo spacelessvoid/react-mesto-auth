@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../contexts/AppContext";
+import * as path from "../utils/paths";
 import useForm from "../hooks/useForm";
 
 function Register({ handleRegistration }) {
@@ -52,7 +53,7 @@ function Register({ handleRegistration }) {
       </form>
       <p className="welcome-form__text">
         Уже зарегистрированы?{" "}
-        <Link to="/signin" className="link">
+        <Link to={path.signIn} className="link">
           Войти
         </Link>
       </p>

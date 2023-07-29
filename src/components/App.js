@@ -180,6 +180,8 @@ function App() {
         .then(() => navigate("/", { replace: true }))
         .catch(console.error)
         .finally(() => setIsLoading(false));
+    } else {
+      setIsLoading(false);
     }
   }
 
